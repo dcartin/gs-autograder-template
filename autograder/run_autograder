@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Set up autograder files
+
+cp /autograder/submission/kinematics.py /autograder/source/kinematics.py
+
+cd /autograder/source
+
+python run_tests.py > /autograder/results/results.json
