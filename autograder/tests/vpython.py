@@ -1,69 +1,21 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Feb 28 11:32:50 2021
+# Github repository for vPython code is at
+# https://github.com/vpython/vpython-jupyter
 
-@author: cartin
-"""
+# Import functions from math
 
-# Create a class of mock objects
+from math import cos, sin, sqrt
 
-class Mock:
-    def __init__(self, name, *args, **kwargs):
-        self.name = name
+#-----------------------------------------------------------------------------#
 
-    def __call__(self, *args, **kwargs):
-        self.args = args
-        self.kwargs = kwargs
-        for name in kwargs:
-            setattr(self, name, kwargs[name])
+# Math functions
 
-        if self.name == "vector" and len(args) == 3:
-            self.x = args[0]
-            self.y = args[1]
-            self.z = args[2]
+pi = 3.141592653589793
 
-        return self
+#-----------------------------------------------------------------------------#
 
-# Create possible vPython objects
-
-arrow = Mock("arrow")
-box = Mock("box")
-cone = Mock("cone")
-curve = Mock("curve")
-cylinder = Mock("cylinder")
-ellipsoid = Mock("ellipsoid")
-helix = Mock("helix")
-label = Mock("label")
-pyramid = Mock("pyramid")
-ring = Mock("ring")
-sphere = Mock("sphere")
-
-# Auxiliary commands
-
-canvas = Mock("canvas")
-rate = Mock("rate")
-
-# Create all possible vPython colors
-# (list taken from https://www.glowscript.org/docs/VPythonDocs/color.html)
-
-color = Mock("color")
-
-color.red = "red"
-color.green = "green"
-color.blue = "blue"
-color.purple = "purple"
-color.yellow = "yellow"
-color.orange = "orange"
-color.cyan = "cyan"
-color.magenta = "magenta"
-color.black = "black"
-color.white = "white"
-
-# Vectors must be handled specially, since calculations must be carried out
-# properly and reported at the end
+# Vectors are important
 
 class vector:
-
     def __init__(self, *args):
         if len(args) == 3:              # Vector defined in terms of components
             self.x = float(args[0])
@@ -130,7 +82,7 @@ class vector:
 
     def norm(self):
         v = mag(self)
-        return vector(self.x / mag, self.y / mag, self.z / mag)
+        return vector(self.x / v, self.y / v, self.z / v)
 
     # Scalar product
 
@@ -152,3 +104,106 @@ hat = vector.norm
 mag = vector.mag
 mag2 = vector.mag2
 norm = vector.norm
+
+#-----------------------------------------------------------------------------#
+
+# Add color to your life
+
+class color:
+    def __init__(self, *args):
+        pass
+
+#-----------------------------------------------------------------------------#
+
+# Default values for most vPython objects are same
+# as that of a cylinder
+
+class cylinder:
+    def __init__(self,
+                 pos = vector(0, 0, 0),
+                 axis = vector(1, 0, 0),
+                 up = vector(0, 1, 0),
+                 length = 1,
+                 radius = 1,
+                 #size = vector(length, 2 * radius, 2 * radius),
+                 color = vector(1, 1, 1),
+                 red = 1,
+                 green = 1,
+                 blue = 1,
+                 opacity = 1,
+                 shininess = 0.6,
+                 emissive = False,
+                 make_trail = False):
+        
+        self.pos = pos
+        self.axis = axis
+        self.up = up
+        self.length = length
+        self.radius = radius
+        #self.size = size
+        self.color = color
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.opacity = opacity
+        self.shininess = shininess
+        self.emissive = emissive
+        self.make_trail = make_trail
+        
+        # Potential problem with length, radius not matching
+        # defined values for size
+
+#-----------------------------------------------------------------------------#
+        
+class arrow:
+    def __init__(self,
+                 pos = vector(0, 0, 0),
+                 axis = vector(1, 0, 0),
+                 up = vector(0, 1, 0),
+                 length = 1,
+                 radius = 1,
+                 #size = vector(length, 2 * radius, 2 * radius),
+                 color = vector(1, 1, 1),
+                 red = 1,
+                 green = 1,
+                 blue = 1,
+                 opacity = 1,
+                 shininess = 0.6,
+                 emissive = False,
+                 make_trail = False,
+                 round = False,
+                 shaftwidth = 0.1,
+                 headwidth = 0.2,
+                 headlength = 0.3):
+        
+        self.pos = pos
+        self.axis = axis
+        self.up = up
+        self.length = length
+        self.radius = radius
+        #self.size = size
+        self.color = color
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.opacity = opacity
+        self.shininess = shininess
+        self.emissive = emissive
+        self.make_trail = make_trail
+        self.round = round
+        self.shaftwidth = shaftwidth
+        self.headwidth = headwidth
+        self.headlength = headlength
+        
+        # Setting shaftwidth to zero sets it
+        # to the default
+        
+#        if shaftwidth == 0:
+#            self.shaftwidth = 0.1 * self.length
+
+#-----------------------------------------------------------------------------#
+
+class box:
+    def __init__(self, pos = (0, 0, 0), color = (1, 1, 1)):
+        self.pos = pos
+        self.color = color

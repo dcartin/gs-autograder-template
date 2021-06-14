@@ -2,7 +2,7 @@
 
 # Set up autograder files
 
-cp /autograder/submission/kinematics.py /autograder/source/kinematics.py
+cp /autograder/submission/HWxx.py /autograder/source/HWxx.py
 
 cd /autograder/source
 
