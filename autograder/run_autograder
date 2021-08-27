@@ -6,4 +6,4 @@ cp /autograder/submission/HWxx.py /autograder/source/HWxx.py
 
 cd /autograder/source
 
-python run_tests.py > /autograder/results/results.json
+python3 run_tests.py > /autograder/results/results.json

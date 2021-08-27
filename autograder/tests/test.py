@@ -1,3 +1,5 @@
+# Import Python unittest module
+
 import unittest
 
 # Import Gradescope utility suite, as appropriate
@@ -11,7 +13,9 @@ from vpython import *
 # Import student-provided procedure Solution from
 # template.py
 
-from template import Solution
+from template.py import Solution
+
+# Other modules needed
 
 #-----------------------------------------------------------------------------#
 

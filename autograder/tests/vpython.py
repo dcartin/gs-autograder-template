@@ -1,9 +1,11 @@
 # Github repository for vPython code is at
 # https://github.com/vpython/vpython-jupyter
 
+# Last updated: 30 Jul 2021
+
 # Import functions from math
 
-from math import cos, sin, sqrt
+from math import acos, asin, atan, cos, radians, sin, sqrt, tan
 
 #-----------------------------------------------------------------------------#
 
@@ -60,6 +62,11 @@ class vector:
 
     def __rmul__(self, other):
         return vector(other * self.x, other * self.y, other * self.z)
+    
+    # Negation of a vector
+    
+    def __neg__(self):
+        return vector(-self.x, -self.y, -self.z)
 
     # Only division using '/' appears to be defined in Glowscript; the
     # operations '//' and '%' give errors
@@ -110,7 +117,30 @@ norm = vector.norm
 # Add color to your life
 
 class color:
-    def __init__(self, *args):
+    def __init__(self):
+        
+        self.red = vector(1, 0, 0)
+        self.green = vector(0, 1, 0)
+        self.blue = vector(0, 0, 1)
+        self.purple = vector(0.4, 0.2, 0.6)
+        self.yellow = vector(1, 1, 0)
+        self.orange = vector(1, 0.6, 0)
+        self.cyan = vector(0, 1, 1)
+        self.magenta = vector(1, 0, 1)
+        self.black = vector(0, 0, 0)
+        self.white = vector(1, 1, 1)
+        
+# Create a color() object called color
+
+color = color()
+
+#-----------------------------------------------------------------------------#
+
+# There is no need to define anything related to rate, so I don't, but
+# it does need to be present, just in case it is used
+
+class rate:
+    def __init__(self, value):
         pass
 
 #-----------------------------------------------------------------------------#
@@ -133,7 +163,8 @@ class cylinder:
                  opacity = 1,
                  shininess = 0.6,
                  emissive = False,
-                 make_trail = False):
+                 make_trail = False,
+                 **kwargs):
         
         self.pos = pos
         self.axis = axis
@@ -149,6 +180,9 @@ class cylinder:
         self.shininess = shininess
         self.emissive = emissive
         self.make_trail = make_trail
+        
+        for key, value in kwargs.items():
+            setattr(self, key, value)
         
         # Potential problem with length, radius not matching
         # defined values for size
@@ -204,6 +238,100 @@ class arrow:
 #-----------------------------------------------------------------------------#
 
 class box:
-    def __init__(self, pos = (0, 0, 0), color = (1, 1, 1)):
+    def __init__(self,
+                 pos = (0, 0, 0),
+                 color = (1, 1, 1),
+                 **kwargs):
+        
         self.pos = pos
         self.color = color
+        
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+#-----------------------------------------------------------------------------#
+
+class sphere:
+    def __init__(self,
+                 pos = vector(0, 0, 0),
+                 axis = vector(1, 0, 0),
+                 up = vector(0, 1, 0),
+                 color = vector(1, 1, 1),
+                 red = 1,
+                 green = 1,
+                 blue = 1,
+                 opacity = 1,
+                 shininess = 0.6,
+                 emissive = False,
+                 #texture = textures.something
+                 radius = 1,
+                 #size = vector(length, 2 * radius, 2 * radius),
+                 make_trail = False,
+                 **kwargs):
+        
+        self.pos = pos
+        self.axis = axis
+        self.up = up
+        self.radius = radius
+        #self.size = size
+        self.color = color
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.opacity = opacity
+        self.shininess = shininess
+        self.emissive = emissive
+        self.make_trail = make_trail
+        
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+#-----------------------------------------------------------------------------#
+
+class graph:
+    def __init__(self,
+                 width = 640,
+                 height = 400,
+                 align = 'none',
+                 title = '',
+                 xtitle = '',
+                 ytitle = '',
+                 xmin = None,
+                 xmax = None,
+                 ymin = None,
+                 ymax = None,
+                 foreground = color.black,
+                 background = color.white):
+        
+        self.width = width
+        self.height = height
+        self.title = title
+        self.xtitle = xtitle
+        self.ytitle = ytitle
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+        self.foreground = foreground
+        self.background = background
+
+#-----------------------------------------------------------------------------#
+
+class gcurve:
+    def __init__(self,
+                 graph = graph(),
+                 data = [],
+                 width = 2,
+                 color = color.black,
+                 markers = False,
+                 dot = False,
+                 visible = True):
+        
+        self.graph = graph
+        self.data = []
+        
+    # Create data structure to hold plotted data
+        
+    def plot(self, *args):
+        
+        self.data += [[data_pt for data_pt in args]]
